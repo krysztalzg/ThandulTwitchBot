@@ -1,5 +1,3 @@
-from bot.environment import bot_environment
-from bot.bot import Bot as ThandulBot
+from bot.chat_bot import bot
 
-bot = ThandulBot(bot_environment)
 bot.run()
