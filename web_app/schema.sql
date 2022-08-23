@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS todo;
+
+CREATE TABLE todo (
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    color TEXT NOT NULL,
+    task TEXT NOT NULL,
+    done BOOL NOT NULL DEFAULT FALSE
+);
