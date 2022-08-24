@@ -1,8 +1,9 @@
 from mimetypes import init
 from pydoc import cli
-import sqlite3
-import click
+from sqlite3 import connect, PARSE_DECLTYPES, Row
+from click import command, echo
 from flask import current_app, g
+from os.path import dirname, abspath, join
 
 def init_app(app):
     app.teardown_appcontext(close_db)
@@ -13,19 +14,26 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-@click.command('init-db')
+@command('init-db')
 def init_db_command():
     init_db()
-    click.echo('Database initialized.')
+    echo('Database initialized.')
 
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect(
+        g.db = connect(
             current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
+            detect_types=PARSE_DECLTYPES
         )
-        g.db.row_factory = sqlite3.Row
+        g.db.row_factory = Row
     return g.db
+
+def get_db_detached():
+    path = abspath(join(dirname(__file__), '..', 'instance', 'database.sqlite'))
+    return connect(
+            path,
+            detect_types=PARSE_DECLTYPES
+    )
 
 def close_db(e=None):
     db = g.pop('db', None)

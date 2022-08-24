@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS todo;
 
 CREATE TABLE todo (
-    id INTEGER PRIMARY KEY,
+    id TEXT PRIMARY KEY,
+    server TEXT NOT NULL,
     username TEXT NOT NULL,
     color TEXT NOT NULL,
     task TEXT NOT NULL,

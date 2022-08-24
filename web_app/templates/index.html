@@ -1,7 +1,7 @@
 <!doctype html>
 <head><meta http-equiv="refresh" content="5"></head>
 <ul>
-  {% for item in items %}
-    <li>{{ item }}</li>
+  {% for channel in channels %}
+    <li><a href="{{ channel }}">{{ channel }}</a></li>
   {% endfor %}
 </ul>

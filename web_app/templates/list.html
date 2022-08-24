@@ -1,5 +1,7 @@
+<!doctype html>
+<head><meta http-equiv="refresh" content="5"></head>
 <ul>
-    <li>Coffee</li>
-    <li>Tea</li>
-    <li>Milk</li>
+  {% for task in tasks %}
+    <li><b style="color:{{ task['color'] }}">{{ task['username'] }}</b>: {{ task['task'] }}</li>
+  {% endfor %}
 </ul>

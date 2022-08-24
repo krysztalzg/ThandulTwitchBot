@@ -1,3 +1,6 @@
 from bot.chat_bot import bot
 
-bot.run()
+try:
+    bot.run()
+except:
+    bot.close_db()

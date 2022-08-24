@@ -1,7 +1,11 @@
+from cgi import test
 from twitchio.ext import commands
 
-from .handlers.message_handler import handle_message
-from .handlers.command_handlers import add_command
+from .handlers.command_handlers import handle_add_command
+
+from sys import path
+path.append('...')
+from web_app.db import get_db_detached
 
 class Bot(commands.Bot):
 
@@ -12,13 +16,17 @@ class Bot(commands.Bot):
             client_secret=bot_environment.client_secret,
             initial_channels=bot_environment.channels
         )
+        self.db = get_db_detached()
+
+    def close_db(self):
+        if self.db is not None:
+            self.db.close()
 
     async def event_ready(self):
         print(f'Logged in as | {self.nick}({self.user_id})')
 
-    async def event_message(self, message):
-        handle_message(message)
-
     @commands.command()
     async def add(self, ctx: commands.Context):
-        add_command(ctx)
+        if self.db is None:
+            return
+        handle_add_command(ctx, self.db)
