@@ -1,7 +1,7 @@
 from cgi import test
 from twitchio.ext import commands
 
-from .handlers.command_handlers import handle_add_command
+from .handlers.command_handlers import handle_add_command, handle_done_command, handle_clear_command
 
 from sys import path
 path.append('...')
@@ -29,4 +29,16 @@ class Bot(commands.Bot):
     async def add(self, ctx: commands.Context):
         if self.db is None:
             return
-        handle_add_command(ctx, self.db)
+        await handle_add_command(ctx, self.db)
+
+    @commands.command()
+    async def done(self, ctx: commands.Context):
+        if self.db is None:
+            return
+        await handle_done_command(ctx, self.db)
+
+    @commands.command()
+    async def clear(self, ctx: commands.Context):
+        if self.db is None:
+            return
+        await handle_clear_command(ctx, self.db)

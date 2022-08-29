@@ -1,6 +1,6 @@
 from os import path, makedirs
 from json import dumps
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 
 from . import db
 from .db import get_db
@@ -26,16 +26,24 @@ def create_app():
 
     @app.route("/")
     def index():
-        return render_template('index.html', channels=bot_environment.channels)
+        try:
+            db = get_db()
+            tasks = db.execute(f'SELECT DISTINCT server FROM todo where done = FALSE').fetchall()
+            return render_template('index.html', channels=[task['server'] for task in tasks])
+        except:
+            return render_error()
 
     @app.route("/<channel>")
     def list(channel):
         if channel is None:
-            return
-        db = get_db()
-        tasks = db.execute(f'SELECT *  FROM todo where server = "{channel.lower()}"').fetchall()
-        print(tasks)
-        return render_template('list.html', tasks=tasks)
+            return render_error()
+
+        try:
+            db = get_db()
+            tasks = db.execute(f'SELECT * FROM todo where server = "{channel.lower()}" AND done = FALSE').fetchall()
+            return render_template('list.html', tasks=tasks)
+        except:
+            return render_error()
 
     @app.route("/test")
     def test():
@@ -64,7 +72,10 @@ def create_app():
             )
             db.commit()
         except db.IntegrityError:
-            return "Tasks are already added."
-        return "DONE"
+            pass
+        return redirect('/')
+
+    def render_error():
+        return 'Oops! Something went wrong.'
 
     return app

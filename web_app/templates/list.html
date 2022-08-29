@@ -1,7 +1,7 @@
 <!doctype html>
-<head><meta http-equiv="refresh" content="5"></head>
-<ul>
+<!-- <head><meta http-equiv="refresh" content="5"></head> -->
+<ul class="list">
   {% for task in tasks %}
-    <li><b style="color:{{ task['color'] }}">{{ task['username'] }}</b>: {{ task['task'] }}</li>
+    <li class="row"><b class="username" style="color:{{ task['color'] }}">{{ task['username'] }}</b><span class="task">: {{ task['task'] }}</span></li>
   {% endfor %}
 </ul>
