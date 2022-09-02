@@ -1,0 +1,34 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    overflow:hidden;
+    background-color: rgb(255, 255, 255);
+}
+
+.container{
+  width: 700px;
+  height: 200px;
+  overflow:hidden;
+}
+
+.list {
+    position:relative;
+    list-style:none;
+}
+
+.row {
+    font-weight: normal;
+    height: 50px;
+}
+
+.username {
+    font-size: 44px;
+    font-weight: bold;
+}
+
+.task {
+    font-size: 36px;
+    font-weight: 500;
+    color:rgb(0, 0, 0);
+}

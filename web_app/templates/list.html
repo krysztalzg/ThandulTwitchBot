@@ -1,7 +1,13 @@
 <!doctype html>
-<!-- <head><meta http-equiv="refresh" content="5"></head> -->
-<ul class="list">
-  {% for task in tasks %}
-    <li class="row"><b class="username" style="color:{{ task['color'] }}">{{ task['username'] }}</b><span class="task">: {{ task['task'] }}</span></li>
-  {% endfor %}
-</ul>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script type = "text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script type = "text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<div class="container">
+  <ul class="list">
+    {% for task in tasks %}
+      <li class="row"><b class="username" style="color:{{ task['color'] }}">{{ task['username'] }}</b><span class="task">: {{ task['task'] }}</span></li>
+    {% endfor %}
+  </ul>
+</div>

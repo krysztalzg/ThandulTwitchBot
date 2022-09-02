@@ -103,3 +103,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 commands.md
+local_app/pomoboard.txt

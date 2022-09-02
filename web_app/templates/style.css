@@ -1,0 +1,32 @@
+body {
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    box-sizing:border-box;
+    margin:20px auto;
+
+    width:500px;
+    height:300px;
+}
+
+.list {
+    position:relative;
+    list-style:none;
+}
+
+.row {
+    font-size: 36px;
+    font-weight: normal;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.username {
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.task {
+    font-size: 36px;
+    font-weight: 500;
+    color:rgb(0, 0, 0);
+}
