@@ -45,35 +45,18 @@ def create_app():
         except:
             return render_error()
 
-    @app.route("/test")
-    def test():
-        db = get_db()
-        error = None
+    @app.route("/json/<channel>")
+    def json(channel):
+        if channel is None:
+            return render_error()
 
         try:
-            db.execute(
-                'INSERT INTO todo (id, server, username, color, task) VALUES (?, ?, ?, ?, ?)',
-                ('1', 'clarishy', 'test_user', '#000000', 'some task'),
-            )
-            db.commit()
-            db.execute(
-                'INSERT INTO todo (id, server, username, color, task) VALUES (?, ?, ?, ?, ?)',
-                ('2', 'clarishy', 'thandul', '#B35E19', 'finish the bot'),
-            )
-            db.commit()
-            db.execute(
-                'INSERT INTO todo (id, server, username, color, task) VALUES (?, ?, ?, ?, ?)',
-                ('3', 'clarishy', 'huntaa', '#FF0000', 'relacja z Pyrkonu'),
-            )
-            db.commit()
-            db.execute(
-                'INSERT INTO todo (id, server, username, color, task) VALUES (?, ?, ?, ?, ?)',
-                ('4', 'clarishy', 'test_user blue', '#0000FF', 'test task'),
-            )
-            db.commit()
-        except db.IntegrityError:
-            pass
-        return redirect('/')
+            db = get_db()
+            tasks = db.execute(f'SELECT * FROM todo where server = "{channel.lower()}" AND done = FALSE').fetchall()
+            json = '\n'.join([f"{task['username']}: {task['task']}" for task in tasks])
+            return json
+        except:
+            return ""
 
     def render_error():
         return 'Oops! Something went wrong.'
